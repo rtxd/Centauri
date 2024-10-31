@@ -11,10 +11,18 @@ export default defineNuxtConfig({
   },
   ssr: true,
   nitro: {
-    preset: 'netlify',
+    preset: 'static',
     prerender: {
-      crawlLinks: true,
-      routes: ['/'],
+      crawlLinks: false,
+      routes: ['/', '/nasa']
+    },
+    output: {
+      dir: '.output',
+      publicDir: 'dist'
+    },
+    static: true,
+    routeRules: {
+      '/**': { static: true }
     }
   },
   build: {

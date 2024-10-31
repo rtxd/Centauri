@@ -12,6 +12,4 @@
 	</div>
 </template>
 
-<script setup>
-// You can add any home page specific logic here
-</script>
+<script setup></script>
