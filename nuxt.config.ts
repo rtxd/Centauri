@@ -11,6 +11,13 @@ export default defineNuxtConfig({
   },
   ssr: true,
   nitro: {
-    preset: 'netlify'
+    preset: 'netlify',
+    prerender: {
+      crawlLinks: true,
+      routes: ['/'],
+    }
+  },
+  build: {
+    transpile: []
   }
 })
