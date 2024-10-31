@@ -8,5 +8,9 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     nasaApiKey: process.env.NASA_API_KEY
+  },
+  ssr: true,
+  nitro: {
+    preset: 'netlify'
   }
 })
