@@ -3,9 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   css: ['./assets/css/main.css'],
-  modules: [
-    '@nuxtjs/tailwindcss'
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/image'],
   runtimeConfig: {
     nasaApiKey: process.env.NASA_API_KEY
   },
