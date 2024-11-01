@@ -1,0 +1,66 @@
+<template>
+	<div
+		class="relative w-full h-[600px] bg-[#1A1D1F] rounded-lg overflow-hidden"
+	>
+		<ClientOnly>
+			<TresCanvas>
+				<TresPerspectiveCamera :position="[0, 0, 10]" />
+				<TresAmbientLight :intensity="0.8" />
+				<TresDirectionalLight :position="[5, 5, 5]" :intensity="0.5" />
+				<OrbitControls :autoRotate="true" :autoRotateSpeed="0.5" />
+
+				<!-- Core (inner) -->
+				<TresMesh v-if="selectedLayer === 'core'">
+					<TresSphereGeometry :args="[1.4]" />
+					<TresMeshStandardMaterial color="#ff6b3d" />
+				</TresMesh>
+
+				<!-- Mantle (middle) -->
+				<TresMesh v-if="selectedLayer === 'mantle'">
+					<TresSphereGeometry :args="[1.7]" />
+					<TresMeshStandardMaterial
+						color="#ff9248"
+						:transparent="true"
+						:opacity="0.7"
+					/>
+				</TresMesh>
+
+				<!-- Crust (outer) -->
+				<TresMesh v-if="selectedLayer === 'crust'">
+					<TresSphereGeometry :args="[2]" />
+					<TresMeshStandardMaterial
+						color="#0077be"
+						:transparent="true"
+						:opacity="0.6"
+					/>
+				</TresMesh>
+			</TresCanvas>
+		</ClientOnly>
+
+		<!-- Layer Controls -->
+		<div class="absolute top-4 right-4 flex gap-2 bg-black/30 p-4 rounded-lg">
+			<button
+				v-for="layer in ['crust', 'mantle', 'core']"
+				:key="layer"
+				@click="selectedLayer = layer"
+				class="px-4 py-2 rounded-lg transition-colors"
+				:class="
+					selectedLayer === layer
+						? 'bg-blue-500 text-white'
+						: 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+				"
+			>
+				{{ layer.charAt(0).toUpperCase() + layer.slice(1) }}
+			</button>
+		</div>
+	</div>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { OrbitControls } from "@tresjs/cientos";
+
+const selectedLayer = ref("crust");
+</script>
+
+<style scoped></style>

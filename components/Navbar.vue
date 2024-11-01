@@ -14,7 +14,7 @@
 
 				<!-- Search Bar -->
 				<div class="flex-1 max-w-lg mx-8">
-					<SearchBar @search="handleSearch" />
+					<SearchBar />
 				</div>
 
 				<!-- Navigation Links -->
@@ -37,9 +37,4 @@
 	</nav>
 </template>
 
-<script setup lang="ts">
-const handleSearch = (query: string) => {
-	// Handle search logic here
-	console.log("Search query:", query);
-};
-</script>
+<script setup lang="ts"></script>
