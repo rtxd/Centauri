@@ -25,11 +25,16 @@
 				:style="{ transform: `translateX(-${currentIndex * 100}%)` }"
 			>
 				<div
-					v-for="card in cards"
-					:key="card.id"
+					v-for="page in learnPages"
+					:key="page.path"
 					class="w-full flex-shrink-0 px-4"
 				>
-					<AppCard :title="card.title" :description="card.description" />
+					<AppCard
+						:title="page.title"
+						:description="page.meta.description || ''"
+						:image="page.meta.image"
+						:to="page.path"
+					/>
 				</div>
 			</TransitionGroup>
 		</div>
@@ -37,7 +42,7 @@
 		<!-- Dots Navigation -->
 		<div class="flex justify-center gap-2 mt-4">
 			<button
-				v-for="(_, index) in cards"
+				v-for="(_, index) in learnPages"
 				:key="index"
 				@click="currentIndex = index"
 				class="w-2 h-2 rounded-full transition-colors duration-200"
@@ -54,42 +59,19 @@
 </template>
 
 <script setup>
-const cards = ref([
-	{
-		id: 1,
-		title: "Exploring Mars",
-		description:
-			"Discover the latest findings from the Red Planet, including evidence of ancient water and potential signs of life.",
-	},
-	{
-		id: 2,
-		title: "Black Holes",
-		description:
-			"Journey into the most mysterious objects in our universe, where gravity is so strong that even light cannot escape.",
-	},
-	{
-		id: 3,
-		title: "Exoplanets",
-		description:
-			"Explore worlds beyond our solar system, from super-Earths to gas giants orbiting distant stars.",
-	},
-	{
-		id: 4,
-		title: "Northern Lights",
-		description:
-			"Understand the science behind Earth's most spectacular light show, the Aurora Borealis.",
-	},
-]);
-
+const { pages } = usePages("learn");
+const learnPages = ref(pages);
 const currentIndex = ref(0);
 
 const nextSlide = () => {
-	currentIndex.value = (currentIndex.value + 1) % cards.value.length;
+	currentIndex.value = (currentIndex.value + 1) % learnPages.value.length;
 };
 
 const prevSlide = () => {
 	currentIndex.value =
-		currentIndex.value === 0 ? cards.value.length - 1 : currentIndex.value - 1;
+		currentIndex.value === 0
+			? learnPages.value.length - 1
+			: currentIndex.value - 1;
 };
 
 // Auto-advance slides (optional)

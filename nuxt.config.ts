@@ -11,10 +11,10 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'static',
     prerender: {
-      crawlLinks: false,
-      routes: ['/', '/nasa']
-    },
-    output: {
+			crawlLinks: false,
+			routes: ['/', '/learn/nasa', '/learn/astronomy']
+		},
+		output: {
       dir: '.output',
       publicDir: 'dist'
     },
