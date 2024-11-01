@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     preset: 'static',
     prerender: {
 			crawlLinks: false,
-			routes: ['/', '/learn/nasa', '/learn/astronomy']
+			routes: ['/', '/learn/nasa', '/learn/astronomy', '/about']
 		},
 		output: {
       dir: '.output',
