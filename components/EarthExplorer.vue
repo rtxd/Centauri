@@ -1,7 +1,5 @@
 <template>
-	<div
-		class="relative w-full h-[600px] bg-[#1A1D1F] rounded-lg overflow-hidden"
-	>
+	<div class="relative w-3/4 h-[500px] bg-[#1A1D1F] rounded-lg overflow-hidden">
 		<ClientOnly>
 			<TresCanvas>
 				<TresPerspectiveCamera :position="[0, 0, 10]" />
@@ -11,28 +9,24 @@
 
 				<!-- Core (inner) -->
 				<TresMesh v-if="selectedLayer === 'core'">
-					<TresSphereGeometry :args="[1.4]" />
-					<TresMeshStandardMaterial color="#ff6b3d" />
+					<TresSphereGeometry :args="[1.4, 64, 32]" />
+					<TresMeshStandardMaterial
+						:map="coreTexture"
+						:metalness="0.1"
+						:roughness="0.9"
+					/>
 				</TresMesh>
 
 				<!-- Mantle (middle) -->
 				<TresMesh v-if="selectedLayer === 'mantle'">
-					<TresSphereGeometry :args="[1.7]" />
-					<TresMeshStandardMaterial
-						color="#ff9248"
-						:transparent="true"
-						:opacity="0.7"
-					/>
+					<TresSphereGeometry :args="[1.7, 64, 32]" />
+					<TresMeshStandardMaterial :map="mantleTexture" />
 				</TresMesh>
 
 				<!-- Crust (outer) -->
-				<TresMesh v-if="selectedLayer === 'crust'">
-					<TresSphereGeometry :args="[2]" />
-					<TresMeshStandardMaterial
-						color="#0077be"
-						:transparent="true"
-						:opacity="0.6"
-					/>
+				<TresMesh v-if="selectedLayer === 'crust' && isTextureLoaded">
+					<TresSphereGeometry :args="[2, 64, 32]" />
+					<TresMeshStandardMaterial :map="earthTexture" />
 				</TresMesh>
 			</TresCanvas>
 		</ClientOnly>
@@ -57,10 +51,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { OrbitControls } from "@tresjs/cientos";
+import { useTexture } from "@tresjs/core";
+import type { Texture } from "three";
 
+defineComponent({
+	name: "EarthExplorer",
+});
+
+const earthTexture = ref<Texture | null>(null);
+const mantleTexture = ref<Texture | null>(null);
+const coreTexture = ref<Texture | null>(null);
 const selectedLayer = ref("crust");
+const isTextureLoaded = ref(false);
+
+onMounted(async () => {
+	try {
+		[earthTexture.value, mantleTexture.value, coreTexture.value] =
+			await useTexture([
+				"/textures/earth.jpg",
+				"/textures/mantle.jpg",
+				"/textures/core.jpg",
+			]);
+		isTextureLoaded.value = true;
+	} catch (error) {
+		console.error("Error loading texture:", error);
+	}
+});
 </script>
 
 <style scoped></style>

@@ -1,11 +1,10 @@
 <template>
-	<div class="max-w-7xl mx-auto px-4 py-8">
+	<div class="max-w-7xl mx-auto px-4 py-8 flex flex-col items-center">
 		<h1 class="text-4xl font-bold mb-6 text-gray-100">Earth</h1>
 
 		<EarthExplorer />
 
-		<div class="mt-8 prose prose-invert">
-			<!-- Add your earth-related content here -->
+		<div class="mt-8 prose prose-invert text-center">
 			<p class="text-gray-300">
 				Explore the layers and history of our planet Earth.
 			</p>
