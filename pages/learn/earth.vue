@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import EarthExplorer from "~/components/EarthExplorer.vue";
+import EarthExplorer from "~/components/EarthExplorer/index.vue";
 
 definePageMeta({
 	description: "Explore Earth's structure, formation, and geological history",
