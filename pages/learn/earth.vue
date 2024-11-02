@@ -1,14 +1,12 @@
 <template>
 	<div class="max-w-7xl mx-auto px-4 py-8 flex flex-col items-center">
-		<h1 class="text-4xl font-bold mb-6 text-gray-100">Earth</h1>
+		<h1 class="text-4xl font-bold mb-6 text-gray-100">Welcome to Earth</h1>
+		<p class="text-gray-300">
+			Our home planet, Earth, is a dynamic and fascinating world that has shaped
+			life and civilization for billions of years.
+		</p>
 
-		<EarthExplorer />
-
-		<div class="mt-8 prose prose-invert text-center">
-			<p class="text-gray-300">
-				Explore the layers and history of our planet Earth.
-			</p>
-		</div>
+		<EarthExplorer class="my-8" />
 	</div>
 </template>
 

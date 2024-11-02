@@ -2,12 +2,19 @@
 	<div class="relative w-3/4 h-[500px] bg-[#1A1D1F] rounded-lg overflow-hidden">
 		<ClientOnly>
 			<TresCanvas>
-				<TresPerspectiveCamera :position="[0, 0, 10]" />
+				<!-- Increase background scene size -->
+				<TresMesh>
+					<TresSphereGeometry :args="[2500, 32, 32]" />
+					<TresMeshBasicMaterial :map="starsTexture" :side="2" />
+				</TresMesh>
+
+				<TresPerspectiveCamera :position="[0, 0, 10]" :far="10000" :fov="75" />
 				<TresAmbientLight :intensity="0.8" />
 				<TresDirectionalLight :position="[5, 5, 5]" :intensity="0.5" />
 				<OrbitControls :autoRotate="true" :autoRotateSpeed="0.5" />
 
 				<EarthModel :selectedLayer="selectedLayer" />
+				<SunModel />
 			</TresCanvas>
 		</ClientOnly>
 
@@ -31,12 +38,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { OrbitControls } from "@tresjs/cientos";
-import { TresCanvas } from "@tresjs/core";
+import { TresCanvas, useTexture } from "@tresjs/core";
 import EarthModel from "./EarthModel.vue";
+import SunModel from "./SunModel.vue";
+import type { Texture } from "three";
 
 const selectedLayer = ref("crust");
+const starsTexture = ref<Texture | null>(null);
+
+onUnmounted(() => {
+	if (starsTexture.value) {
+		starsTexture.value.dispose();
+		starsTexture.value = null;
+	}
+});
+
+onMounted(async () => {
+	try {
+		starsTexture.value = await useTexture(["/textures/stars.jpg"]);
+	} catch (error) {
+		console.error("Error loading stars texture:", error);
+	}
+});
 </script>
 
 <style scoped></style>
