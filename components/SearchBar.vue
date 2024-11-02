@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import { usePages } from "~/composables/usePages";
 import { useRouter } from "vue-router";
 
