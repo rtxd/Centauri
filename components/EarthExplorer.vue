@@ -17,6 +17,19 @@
 					/>
 				</TresMesh>
 
+				<!-- Core outer surface -->
+				<TresMesh>
+					<TresSphereGeometry :args="[1.4, 64, 32]" />
+					<TresMeshStandardMaterial
+						:map="coreTexture"
+						emissive="#ff3d00"
+						:emissiveIntensity="1.2"
+						:roughness="0.7"
+						:transparent="true"
+						:opacity="selectedLayer === 'core' ? 0.7 : 0.1"
+					/>
+				</TresMesh>
+
 				<!-- Mantle (middle) -->
 				<TresMesh v-if="selectedLayer === 'mantle'">
 					<TresSphereGeometry :args="[1.7, 64, 32]" />
